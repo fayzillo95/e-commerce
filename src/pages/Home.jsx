@@ -1,0 +1,34 @@
+import { isDarkStore } from "../store/Them.store"
+import HomeRecomendation from "../utils/home-utils/Home-recomendation"
+import PropertyRender from "../utils/home-utils/Home-recomendation-carusel"
+import SearchSection from "../utils/home-utils/Home-search-section"
+import HomePreview from "../utils/home-utils/Home-preview"
+import Slide from '@mui/material/Slide';
+import Category from "../utils/home-utils/Home-slide"
+
+function Home() {
+
+    const { isDark } = isDarkStore()
+
+    return (
+        <main className="">
+            <SearchSection isDark={isDark} />
+            <section id="hero" className="w-full h-[500px] my-5 !shadow-[-1px_10px_10px_rgba(1,1,1,0.7)]">
+
+            </section>
+
+            <HomeRecomendation isDark={isDark} />
+
+            <HomePreview isDark={isDark} />
+
+            <section className="w-full h-[500px] border-2 mb-1.5">
+                <div className="container flex flex-col items-center space-y-4 mx-auto">
+                    <h1 className="border-2">Category</h1>
+                    <Category />
+                </div>
+            </section>
+        </main>
+    )
+}
+
+export default Home
