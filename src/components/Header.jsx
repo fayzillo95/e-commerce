@@ -4,6 +4,7 @@ import { Button, List, ListItem } from "@mui/material"
 import { DarkMode, LightMode, Person, Person2 } from "@mui/icons-material"
 import { isAuthStore } from "../store/IsAuth-store"
 import { Link, NavLink, useLocation } from "react-router-dom"
+import MenuProfile from "../features/Profile.modal"
 
 function Header() {
 
@@ -38,7 +39,7 @@ function Header() {
                         }
                     </Button>
                     {
-                        isAuth ? <Person2></Person2> : <NavLink to="/sign">Sign</NavLink>
+                        isAuth ? <MenuProfile/>: <NavLink to="/sign">Sign</NavLink>
                     }
                 </div>
             </div>

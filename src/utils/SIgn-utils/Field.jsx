@@ -1,25 +1,20 @@
-
 import { TextField } from '@mui/material'
 
-function FieldBox({ field, value, setValue,validation }) {
-
+function FieldBox({ field, value, setValue }) {
     return (
         <TextField
             margin="normal"
-            key={field + Math.random().toString()}
+            key={field}
             required
             fullWidth
-            id={value + "_id"}
+            id={`${field}_id`}
             label={field}
-            name="name"
-            autoComplete="name"
+            name={field}
+            autoComplete={field}
             value={value}
             onChange={(e) => setValue(field, e.target.value)}
             type={field === "phone" ? "tel" : "text"}
-            onKeyDown={(e) => validation(e,field)}
-        >
-
-        </TextField>
+        />
     )
 }
 

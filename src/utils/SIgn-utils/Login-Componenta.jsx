@@ -2,19 +2,48 @@ import React from 'react'
 import FieldBox from './Field'
 import { userDataStore } from '../../store/User-store'
 import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { apiStore } from '../../service/api'
+import { isLoadingStore } from '../../store/isLoading-store'
+import { accessTokenStore, refreshTokenStore } from '../../store/IsAuth-store'
 
 function LoginComponenta() {
 
     const fields = ["email", "password"]
     const { userData, setUserData } = userDataStore()
+    const { isLoadingModal, setIsLoadingModal } = isLoadingStore();
+    const { setAccessToken } = accessTokenStore()
+    const { setRefreshToken } = refreshTokenStore()
+
+    const { api } = apiStore()
+
+    const navigate = useNavigate()
 
     const setValue = (field, value) => {
         const key = value
         return setUserData(field, value)
     }
 
-    const handLeSubmit = () => {
+    const handLeSubmit = async () => {
         console.log(userData)
+        const { email, password } = userData
+        setIsLoadingModal(true)
+
+        try {
+            const { data } = await api.post("/auth/login", { email, password })
+            console.log(data)
+            const {accessToken,refreshToken ,user} = data
+            Object.keys(user).forEach(field => setUserData(field,user[field]))
+            setAccessToken(accessToken)
+            setRefreshToken(refreshToken)
+            navigate("/")
+        } catch (error) {
+            console.log(error)
+        }
+        finally {
+
+            setIsLoadingModal(false)
+        }
     }
 
     const handleKeyDown = (e, field) => {
@@ -34,9 +63,9 @@ function LoginComponenta() {
         <div className='w-[600px] h-[600px] flex flex-col items-center'>
             <h1 className='text-4xl'>Sign In</h1>
             {
-                fields.map((el,index) => <><FieldBox field={el} setValue={setValue} value={userData[el]} validation={handleKeyDown} key={index}/></>)
+                fields.map((el, index) => <><FieldBox field={el} setValue={setValue} value={userData[el]} validation={handleKeyDown} key={index} /></>)
             }
-            <Button>Submit</Button>
+            <Button onClick={() => handLeSubmit()}>Submit</Button>
         </div>
     )
 }

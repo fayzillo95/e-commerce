@@ -15,6 +15,7 @@ export const accessTokenStore = create((set) => {
         setAccessToken : (accessToken) => {
             if(typeof accessToken === "string"){
                 localStorage.setItem("accessToken",accessToken)
+                set({accessToken})
             }else{
                 localStorage.removeItem("accessToken")
             }
@@ -29,6 +30,7 @@ export const refreshTokenStore = create((set) => {
         setRefreshToken : (refreshToken) => {
             if(typeof refreshToken === "string"){
                 localStorage.setItem("refreshToken",refreshToken)
+                set({refreshToken})
             }else{
                 localStorage.removeItem("refreshToken")
             }

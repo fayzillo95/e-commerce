@@ -12,6 +12,7 @@ import SimpleSlider from './pages/Sign'
 import Sign from './pages/Sign'
 import PropertiyAdd from './pages/PropertiyAdd'
 import Footer from './components/Footer'
+import Otp from './pages/Otp'
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/sign' element={<Sign />} />
+            <Route path='/otp' element={<Otp />} />
             <Route path='/properties' element={<PropertiyAdd />}/>
           </Routes>
           <Footer/>
