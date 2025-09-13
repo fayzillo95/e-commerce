@@ -10,7 +10,12 @@ const MediaComponent = () => {
     const [virtualTour, setVirtualTour] = useState('');
 
     const handleFeaturedChange = (e) => {
-        const files = Array.from(e.target.files).slice(0, 4); // Maks 4 ta rasm
+        if(featuredImages.length === 4) {
+            return
+            // featuredImages[0] = Array.from(e.target.files)[0]
+        }
+        console.log(featuredImages)
+        const files = [Array.from(e.target.files)[0],...featuredImages]; // Maks 4 ta rasm
         setFeaturedImages(files);
     };
 
@@ -109,13 +114,13 @@ const MediaComponent = () => {
             />
 
             {/* Virtual tour */}
-            <Typography variant="subtitle2" gutterBottom>Virtual tour</Typography>
+            {/* <Typography variant="subtitle2" gutterBottom>Virtual tour</Typography>
             <TextField
                 variant="standard"
                 fullWidth
                 value={virtualTour}
                 onChange={(e) => setVirtualTour(e.target.value)}
-            />
+            /> */}
         </div>
     );
 };

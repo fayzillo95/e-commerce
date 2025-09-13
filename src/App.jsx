@@ -26,7 +26,7 @@ function App() {
   })
 
   return (
-    <div className='w-full min-h-screen'>
+    <div className='w-full min-h-screen scroll-m-0'>
       <ThemeProvider theme={darkTheme} >
         <div className={`inset-0 bg-[rgba(1,1,1,0.7)] flex items-center justify-center w-screen h-screen fixed z-50 ${isLoadingModal ? "" : "hidden"}`}>
           <CircularProgress size={150}>

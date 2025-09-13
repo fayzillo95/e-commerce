@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TextField } from '@mui/material';
+import { PropertyStore } from '../../store/Property-store';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -9,6 +10,7 @@ const MapComponent = () => {
   const [coords, setCoords] = useState(null);
   const markerRef = useRef(null);
   const [userTargetAddress, setUserTargetAddress] = useState('');
+  const { propertyData, setPropertyData, resetPropertyData } = PropertyStore()
 
   // Xarita boshlanishi
   useEffect(() => {
@@ -20,9 +22,11 @@ const MapComponent = () => {
     }).addTo(map);
 
     map.on('click', (e) => {
+      console.log("Map componenta click map eventListener")
       const lat = e.latlng.lat.toFixed(6);
       const lng = e.latlng.lng.toFixed(6);
       setCoords({ lat, lng });
+      setPropertyData("locationUrl", `https://www.google.com/maps?q=${lat},${lng}`)
 
       if (markerRef.current) {
         map.removeLayer(markerRef.current);
@@ -42,6 +46,7 @@ const MapComponent = () => {
   // Enter bosilganda manzil bo‘yicha koordinata olish
   const onKeyDownHandle = async (e) => {
     if (e.key === 'Enter') {
+
       const address = e.target.value;
       setUserTargetAddress(address);
 
@@ -51,19 +56,19 @@ const MapComponent = () => {
       try {
         const response = await fetch(url, {
           headers: {
-            'User-Agent': 'your-app-name' // Nominatim talab qiladi
+            'User-Agent': 'e-commerce' // Nominatim talab qiladi
           }
         });
         const data = await response.json();
-        // console.log(data)
         if (data && data.length > 0) {
-          const adressName = data[0].display_name  
+          console.log(data)
+          const adressName = data.at(-1).display_name
+          setPropertyData("address",adressName)
           const lat = parseFloat(data[0].lat);
           const lng = parseFloat(data[0].lon);
-
-          console.log({address,lat,lng})
+          setPropertyData("locationUrl", `https://www.google.com/maps?q=${lat},${lng}`)
+          console.log({ address, lat, lng })
           setCoords({ lat, lng });
-
           if (markerRef.current) {
             mapInstance.removeLayer(markerRef.current);
           }

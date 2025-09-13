@@ -21,9 +21,9 @@ function Home() {
 
             <HomePreview isDark={isDark} />
 
-            <section className="w-full h-[500px] border-2 mb-1.5">
+            <section className="w-full h-[500px] border-2 mb-1.5 pt-1.5">
                 <div className="container flex flex-col items-center space-y-4 mx-auto">
-                    <h1 className="border-2">Category</h1>
+                    <h1 className="text-4xl">Category</h1>
                     <Category />
                 </div>
             </section>

@@ -14,7 +14,7 @@ function Header() {
     const location = useLocation()
 
     return (
-        <header className={`${!isDark ? "bg-gray-400" : "bg-gray-800"} ${location.pathname !== "/sign" ? "" : "hidden"} w-full shadow-2xl`}>
+        <header id="head" className={`${!isDark ? "bg-gray-400" : "bg-gray-800"} ${location.pathname !== "/sign" ? "" : "hidden"} w-full shadow-2xl`}>
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center gap-x-2.5">
                     <img src={logo} alt="" />

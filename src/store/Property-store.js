@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export const SaleTypes = ["SALE", "RENT"]
 
-export const features = create((set) => {
+export const featuresStore = create((set) => {
     return {
         featuresData: {},
         setFeaturesData: (field, value) => set(state => (

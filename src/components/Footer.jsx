@@ -80,9 +80,9 @@ function Footer() {
 
         <p className="text-sm">Copyright © 2021 CreativeLayers. All Right Reserved.</p>
 
-        <button className="bg-blue-600 p-2 rounded text-white">
+        <a href='#head' className="bg-blue-600 px-2 rounded text-white">
           ↑
-        </button>
+        </a>
       </div>
     </footer>
   );

@@ -5,7 +5,7 @@ import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { apiStore } from '../../service/api'
 import { isLoadingStore } from '../../store/isLoading-store'
-import { accessTokenStore, refreshTokenStore } from '../../store/IsAuth-store'
+import { accessTokenStore, isAuthStore, refreshTokenStore } from '../../store/IsAuth-store'
 
 function LoginComponenta() {
 
@@ -14,7 +14,7 @@ function LoginComponenta() {
     const { isLoadingModal, setIsLoadingModal } = isLoadingStore();
     const { setAccessToken } = accessTokenStore()
     const { setRefreshToken } = refreshTokenStore()
-
+    const {setIsAuth} = isAuthStore()
     const { api } = apiStore()
 
     const navigate = useNavigate()
@@ -36,6 +36,7 @@ function LoginComponenta() {
             Object.keys(user).forEach(field => setUserData(field,user[field]))
             setAccessToken(accessToken)
             setRefreshToken(refreshToken)
+            setIsAuth(true)
             navigate("/")
         } catch (error) {
             console.log(error)

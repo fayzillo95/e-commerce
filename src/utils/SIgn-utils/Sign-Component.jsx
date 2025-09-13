@@ -13,7 +13,7 @@ function RegisterComponent() {
     const { isLoadingModal, setIsLoadingModal } = isLoadingStore();
     const { api } = apiStore()
     const navigate = useNavigate()
-    
+
     const setValue = (field, value) => {
         const key = value
         return setUserData(field, value)
@@ -44,7 +44,6 @@ function RegisterComponent() {
 
             if (response.status === 201) {
                 alert(response.data.message || "Ro'yxatdan o'tish muvaffaqiyatli")
-                // Qo'shimcha ishlar, masalan, redirect qilish yoki formni tozalash
             }
             if(response.data.data.code){
                 console.log(response)

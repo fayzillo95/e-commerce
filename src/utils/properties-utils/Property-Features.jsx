@@ -19,6 +19,7 @@ const Amenities = () => {
                 ? prev.filter((item) => item !== value)
                 : [...prev, value]
         );
+        console.log(checkedAmenities)
     };
 
     return (
@@ -27,7 +28,7 @@ const Amenities = () => {
                 <Typography variant="h6" gutterBottom>
                     Amenities
                 </Typography>
-                <div className='w-full grid grid-cols-4 border-2 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1'>
+                <div className='w-full grid grid-cols-4 border-2 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 pl-4'>
                     {amenitiesList.map((amenity) => (
                         <Grid key={amenity} item xs={6} sm={3} fontSize={50}>
                             <FormControlLabel

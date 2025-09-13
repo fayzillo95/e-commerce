@@ -3,15 +3,16 @@ import { Button, setRef, TextField, Typography } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 import { apiStore } from "../service/api"
 import { userDataStore } from "../store/User-store"
-import { accessTokenStore, refreshTokenStore } from "../store/IsAuth-store"
+import { accessTokenStore, isAuthStore, refreshTokenStore } from "../store/IsAuth-store"
 
 function Otp() {
     const [otp, setOtp] = useState("")
     const [error, setError] = useState("")
     const { api } = apiStore()
-    const { userData } = userDataStore()
+    const { userData ,setUserData} = userDataStore()
     const {setAccessToken} = accessTokenStore()
     const {setRefreshToken } = refreshTokenStore()
+    const {setIsAuth} = isAuthStore()
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -33,11 +34,14 @@ function Otp() {
                 alert(response.data.message || "Tasdiqlandi!")
                 setAccessToken(response.data.accessToken)
                 setRefreshToken(response.data.refreshToken)
-                navigate("/home") 
+                Object.keys(response.data.user).forEach(field => setUserData(field,response.data.user[field]))
+                setIsAuth(true)
+                navigate("/") 
             }
         } catch (err) {
             if (err.response?.status === 400) {
                 setError(err.response.data.message || "Noto‘g‘ri OTP kodi")
+                setIsAuth(false)
             } else {
                 setError("Server bilan bog‘lanishda xatolik yuz berdi")
             }
