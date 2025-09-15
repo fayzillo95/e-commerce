@@ -12,13 +12,14 @@ import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CustomCardComponenta from './card-createre';
+import { apiStore } from '../../service/api';
 
 
 function PropertyRender({ url = "http://localhost:15975/api/properties/get-all" }) {
     const [data, setData] = useState([
     ]);
     const { isLoadingModal, setIsLoadingModal } = isLoadingStore();
-
+    const {api} = apiStore()
     const property = {
         "title": "Beautiful 3-bedroom apartment",
         "additionals": [
@@ -109,9 +110,9 @@ function PropertyRender({ url = "http://localhost:15975/api/properties/get-all" 
 
     useEffect(() => {
         setIsLoadingModal(true);
-        axios.get(url)
+        api.get("/properties/get-all")
             .then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setData(res.data.data);
             })
             .catch(err => {

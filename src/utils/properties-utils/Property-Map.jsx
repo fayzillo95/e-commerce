@@ -12,7 +12,6 @@ const MapComponent = () => {
   const [userTargetAddress, setUserTargetAddress] = useState('');
   const { propertyData, setPropertyData, resetPropertyData } = PropertyStore()
 
-  // Xarita boshlanishi
   useEffect(() => {
     if (!mapRef.current || mapInstance) return;
 

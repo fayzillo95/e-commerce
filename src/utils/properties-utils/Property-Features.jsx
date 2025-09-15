@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
+import { featuresStore } from '../../store/Property-store';
 
 const amenitiesList = [
     'Air conditioning', 'Lawn', 'Dining Room', 'Waterfront',
@@ -11,15 +12,29 @@ const amenitiesList = [
 
 const Amenities = () => {
     const [checkedAmenities, setCheckedAmenities] = useState([]);
+    const { featuresData, setFeaturesData, resetFeatures } = featuresStore()
+
+    useEffect(() => {
+        amenitiesList.forEach(amenity => {
+            setFeaturesData(amenity.toLowerCase().replaceAll(" ", "_"), false)
+        })
+    }, [])
+
+    useEffect(() => {
+        amenitiesList.forEach(amenity => {
+            setFeaturesData(amenity.toLowerCase().replaceAll(" ", "_"),checkedAmenities.includes(amenity.toLowerCase().replaceAll(" ", "_")) )
+        })
+    }, [checkedAmenities])
 
     const handleChange = (event) => {
-        const { value } = event.target;
+
+        const value = event.target.name.toLowerCase().replaceAll(" ", "_");
+        console.log(event.target.name.toLowerCase().replaceAll(" ", "_"))
         setCheckedAmenities((prev) =>
             prev.includes(value)
                 ? prev.filter((item) => item !== value)
                 : [...prev, value]
         );
-        console.log(checkedAmenities)
     };
 
     return (
@@ -34,11 +49,10 @@ const Amenities = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={checkedAmenities.includes(amenity)}
-                                        onChange={handleChange}
-                                        value={amenity}
+                                        checked={checkedAmenities.includes(amenity.toLowerCase().replaceAll(" ", "_"))}
+                                        onChange={(e) => handleChange(e)}
+                                        name={amenity}
                                         color="primary"
-                                    
                                     />
                                 }
                                 label={amenity}

@@ -13,24 +13,41 @@ export const featuresStore = create((set) => {
                 }
             }
         )),
-        resetFeatures: () => set({})
+        resetFeatures: () => set({}),
     }
 })
-
+export const propertyMediaStore = create((set) => {
+    const propertyMediaData = {
+        features: [],
+        gallery: [],
+        attachments: [],
+        propertyId : ""
+    },
+    setPropertyMedia  = (field,value) => set(prev => {
+        return {
+            propertyMediaData : {
+                ...prev.propertyMediaData,
+                [field] : value
+            }
+        }
+    })
+    return { propertyMediaData,setPropertyMedia}
+})
 export const additionalStore = create((set) => {
     return {
         additionalData: {
+            rooms : "",
             propertyId: "",
             label: "",
             material: "",
-            beds: 0,
-            baths: 0,
-            garages: 0,
-            garageSize: 0,
+            beds: "",
+            baths: "",
+            garages: "",
+            garageSize: "",
             year_build: 2025,
             homeArea: 1200,
             lotDimensions: "",
-            lotArea: 0,
+            lotArea: "",
             buildTypeId: ""
         },
         setAdditionalData: (field, value) => set(state => (
@@ -43,17 +60,18 @@ export const additionalStore = create((set) => {
         )),
         resetAdditionalData: () => set({
             additionalData: {
+                rooms : "",
                 propertyId: "",
                 label: "",
                 material: "",
-                beds: 0,
-                baths: 0,
-                garages: 0,
-                garageSize: 0,
+                beds: "",
+                baths: "",
+                garages: "",
+                garageSize: "",
                 year_build: 2025,
                 homeArea: 1200,
                 lotDimensions: "",
-                lotArea: 0,
+                lotArea: "",
                 buildTypeId: ""
             }
         })
@@ -65,8 +83,8 @@ export const PropertyStore = create((set) => {
         propertyData: {
             title: "",
             description: "",
-            price: 0,
-            discount: 0,
+            price: "",
+            discount: "",
             locationUrl: "",
             address: "",
             status: SaleTypes[0],
@@ -84,8 +102,8 @@ export const PropertyStore = create((set) => {
             propertyData: {
                 title: "",
                 description: "",
-                price: 0,
-                discount: 0,
+                price: "",
+                discount: "",
                 locationUrl: "",
                 address: "",
                 status: SaleTypes[0],

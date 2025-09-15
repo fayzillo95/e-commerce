@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography, TextField, Grid, IconButton } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import { propertyMediaStore } from '../../store/Property-store';
 
 const MediaComponent = () => {
     const [featuredImages, setFeaturedImages] = useState([]);
@@ -11,13 +12,24 @@ const MediaComponent = () => {
 
     const handleFeaturedChange = (e) => {
         if(featuredImages.length === 4) {
+            const newfeaturedImages = Array.from(e.target.files)[0]
+            setFeaturedImages(prev => prev.map((el,index)  => {
+                if(index === 0){
+                    return newfeaturedImages
+                }else{
+                    return el
+                }
+            }))
             return
-            // featuredImages[0] = Array.from(e.target.files)[0]
         }
-        console.log(featuredImages)
         const files = [Array.from(e.target.files)[0],...featuredImages]; // Maks 4 ta rasm
         setFeaturedImages(files);
     };
+    const { propertyMediaData,setPropertyMedia} = propertyMediaStore()
+
+    useEffect(() => setPropertyMedia("features",featuredImages),[featuredImages])
+    useEffect(() => setPropertyMedia("gallery",galleryImages),[galleryImages])
+    useEffect(() => setPropertyMedia("attachments",attachment),[attachment])
 
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);

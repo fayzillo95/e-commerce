@@ -3,6 +3,8 @@ import Slide from "@mui/material/Slide";
 import image from "../../assets/img/unsplash_.png";
 import Carousel from "react-multi-carousel";
 import { apiStore } from "../../service/api";
+import { categoryStore } from "../../store/Category.store";
+import { useLocation } from "react-router-dom";
 
 const slides = [
     image, image, image, image, image
@@ -10,16 +12,16 @@ const slides = [
 
 function Category() {
 
-    const [categories, setCategories] = useState([])
+    const {categories, setCategories} = categoryStore()
     const { api } = apiStore()
+    const url = useLocation()
+
     useEffect(() => {
         api.get("/categories/get-all").then(res => {
             const result = res.data
-            console.log(result)
             setCategories(result.categories)
         })
-    }, [])
-
+    }, [url.pathname])
 
     return (
         <div className="flex gap-x-6 w-full justify-center">

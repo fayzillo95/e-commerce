@@ -30,8 +30,7 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
     setAdditionalData("lotDimensions", `${lotDimensions.A}x${lotDimensions.B}`)
     setAdditionalData(field, value)
   }
-  useEffect(() => console.log(additionalData), [additionalData])
-  useEffect(() => console.log(propertyData), [propertyData])
+
   return (
     <div className="container mx-auto grid grid-cols-3 gap-x-5 gap-y-6 p-6 shadow-2xl">
       <div className="flex">
@@ -67,6 +66,13 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
       ></TextField>
       <TextField
         type='number'
+        label="Rooms"
+        required
+        value={additionalData.beds}
+        onChange={(e) => handleChange("rooms", e)}
+      ></TextField>
+      <TextField
+        type='number'
         label="Baths"
         required
         value={additionalData.baths}
@@ -98,7 +104,7 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
           type='number'
           value={lotDimensions.A}
           onChange={(e) => setLotDimensions(prev => {
-            return { ...prev, "A": +e.target.value }
+            return { ...prev, "A": e.target.value }
           })}
           required
         ></TextField>
@@ -107,7 +113,7 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
           type='number'
           value={lotDimensions.B}
           onChange={(e) => setLotDimensions(prev => {
-            return { ...prev, "B": +e.target.value }
+            return { ...prev, "B": e.target.value }
           })}
           required
         ></TextField>
@@ -115,7 +121,7 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
       <TextField
         label="Lot Area"
         required
-        value={target.lotArea}
+        value={propertyData.lotArea}
         onChange={(e) => handleChange("lotArea", e)}
       ></TextField>
     </div>

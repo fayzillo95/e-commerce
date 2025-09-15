@@ -3,44 +3,53 @@ import Input from '@mui/material/Input'
 import TextField from '@mui/material/TextField'
 import { useEffect, useState } from 'react'
 import { PropertyStore, SaleTypes } from '../../store/Property-store'
+import { categoryStore } from '../../store/Category.store'
+import { apiStore } from '../../service/api'
+import { useLocation } from 'react-router-dom'
 
 function PropertyHead() {
-    const [typeSale, setTypeSale] = useState(SaleTypes[0])
+    const [category, setCategory] = useState([])
+    const { categories, setCategories } = categoryStore()
+
     const { propertyData, setPropertyData, resetPropertyData } = PropertyStore()
-    const p = {
-        "title": "",
-        "description": "",
-        "price": "1500000000",
-        "discount": "22",
-        "locationUrl": "https://www.google.com/maps?q=40.7487812,71.7058631",
-        "address": "Andijon, Ulugʻnor District, Andijan Region, Uzbekistan",
-        "status": "SALE",
-        "isSale": true,
-        "categoryId": "",
-        "ownerId": ""
-    }
 
     useEffect(() => {
-        setPropertyData("status",typeSale)
-    },[typeSale])
+        const ct = categories.find(el => el.name === category)
+        console.log(ct)
+        if (ct && ct.id) {
+            setPropertyData("categoryId",ct.id)
+        }
+    }, [category])
 
+    const { api } = apiStore()
+    const url = useLocation()
+
+    useEffect(() => {
+        api.get("/categories/get-all").then(res => {
+            const result = res.data
+            setCategories(result.categories)
+        })
+    }, [url.pathname])
+
+    // useEffect(() => console.log(categories),[categories])
+    useEffect(() => console.log(propertyData),[propertyData])
     return (
         <div className='container mx-auto flex flex-col gap-y-5 py-5 px-1.5 rounded-[5px] shadow-2xl mt-6'>
             <div className='grid grid-cols-2 w-full gap-x-10'>
-                <TextField label="title" fullWidth value={propertyData.title} onChange={(e) => setPropertyData("title",e.target.value)}></TextField>
+                <TextField label="title" fullWidth value={propertyData.title} onChange={(e) => setPropertyData("title", e.target.value)}></TextField>
                 <FormControl fullWidth>
-                    <InputLabel>Type</InputLabel>
+                    <InputLabel>Category</InputLabel>
                     <Select
                         aria-placeholder='Enter Value'
-                        label="type"
+                        label="Category"
                         autoWidth={true}
-                        value={typeSale}
-                        onChange={e => setTypeSale(e.target.value)}
+                        value={category}
+                        onChange={e => setCategory(e.target.value)}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select">
                         {
-                            SaleTypes.map((el, index) => (
-                                <MenuItem value={el} key={"type-sale" + index}>{el}</MenuItem>
+                            categories.map((el, index) => (
+                                <MenuItem value={el.name} key={"type-sale" + index}>{el.name}</MenuItem>
                             ))
                         }
                     </Select>
@@ -53,7 +62,7 @@ function PropertyHead() {
                     aria-label='Description'
                     placeholder="Description..."
                     value={propertyData.description}
-                    onChange={(e) => setPropertyData("description",e.target.value)}
+                    onChange={(e) => setPropertyData("description", e.target.value)}
                     style={{
                         width: '100%',
                         fontSize: '16px',
