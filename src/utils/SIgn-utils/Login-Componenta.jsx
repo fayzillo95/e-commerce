@@ -40,6 +40,8 @@ function LoginComponenta() {
             navigate("/")
         } catch (error) {
             console.log(error)
+            const {data} = error.response
+            alert(data.message || error.message || "Sign in filed !")
         }
         finally {
 

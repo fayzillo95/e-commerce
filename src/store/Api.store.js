@@ -3,18 +3,18 @@ import { create } from "zustand"
 import { useLocation } from "react-router-dom"
 import { accessTokenStore, refreshTokenStore } from "./IsAuth-store"
 
-export const VITE_BASE_URL = import.meta.env.VITE_BASE_URL
+export const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export const ApiStore = create((set) => {
 
     const api = axios.create({
-        baseURL: VITE_BASE_URL || "http://localhost:15975/api",
+        baseURL: VITE_API_BASE_URL || "http://localhost:15975/api",
         headers: {
             "Content-Type": "application/json",
             "Authorization" : "Bearer " + localStorage.getItem("accessToken")
         },
     })
-    console.log("API STORE VITE BASE URL", VITE_BASE_URL)
+    console.log("API STORE VITE BASE URL", VITE_API_BASE_URL)
 
     api.interceptors.response.use(
         (res) => res.data,
