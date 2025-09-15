@@ -11,25 +11,25 @@ const MediaComponent = () => {
     const [virtualTour, setVirtualTour] = useState('');
 
     const handleFeaturedChange = (e) => {
-        if(featuredImages.length === 4) {
+        if (featuredImages.length === 4) {
             const newfeaturedImages = Array.from(e.target.files)[0]
-            setFeaturedImages(prev => prev.map((el,index)  => {
-                if(index === 0){
+            setFeaturedImages(prev => prev.map((el, index) => {
+                if (index === 0) {
                     return newfeaturedImages
-                }else{
+                } else {
                     return el
                 }
             }))
             return
         }
-        const files = [Array.from(e.target.files)[0],...featuredImages]; // Maks 4 ta rasm
+        const files = [Array.from(e.target.files)[0], ...featuredImages]; // Maks 4 ta rasm
         setFeaturedImages(files);
     };
-    const { propertyMediaData,setPropertyMedia} = propertyMediaStore()
+    const { propertyMediaData, setPropertyMedia } = propertyMediaStore()
 
-    useEffect(() => setPropertyMedia("features",featuredImages),[featuredImages])
-    useEffect(() => setPropertyMedia("gallery",galleryImages),[galleryImages])
-    useEffect(() => setPropertyMedia("attachments",attachment),[attachment])
+    useEffect(() => setPropertyMedia("features", featuredImages), [featuredImages])
+    useEffect(() => setPropertyMedia("gallery", galleryImages), [galleryImages])
+    useEffect(() => setPropertyMedia("attachments", attachment), [attachment])
 
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);
@@ -45,11 +45,10 @@ const MediaComponent = () => {
         <div className='container p-6  mx-auto flex flex-col items-start shadow-2xl'>
             <Typography variant="h6" mb={2}>Media</Typography>
 
-            {/* Featured Image */}
             <Typography variant="subtitle2" gutterBottom>Featured image</Typography>
             <Grid container spacing={2} mb={1}>
                 {[0, 1, 2, 3].map((idx) => (
-                    <Grid item key={idx}>
+                    <Grid key={idx} container>
                         <Box
                             sx={{
                                 width: 80,
@@ -59,7 +58,7 @@ const MediaComponent = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                overflow: 'hidden'
+                                overflow: 'hidden',
                             }}
                         >
                             {featuredImages[idx] ? (
@@ -73,6 +72,7 @@ const MediaComponent = () => {
                     </Grid>
                 ))}
             </Grid>
+
             <Button variant="outlined" component="label" size="small" sx={{ mb: 3 }}>
                 Upload
                 <input
@@ -110,7 +110,6 @@ const MediaComponent = () => {
                 <input
                     type="file"
                     hidden
-                    accept=".pdf"
                     onChange={handleAttachmentChange}
                 />
             </Button>

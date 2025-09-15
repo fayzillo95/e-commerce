@@ -2,14 +2,16 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { additionalStore, featuresStore, PropertyStore } from '../../store/Property-store';
 import { useEffect, useState } from 'react';
+import { apiStore } from '../../service/api';
 
-export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Soxta" }, { id: "cowincdoewm5161616ixedw", name: "Dacha" }] }) {
+export function Additionals() {
 
-  const [buildType, setBuildType] = useState({ id: "cowincdoewmixedw", name: "Default" })
+  const [buildType, setBuildType] = useState("")
   const [lotDimensions, setLotDimensions] = useState({ "A": 0, "B": 0 })
   const { additionalData, setAdditionalData, resetAdditionalData } = additionalStore()
   const { propertyData, setPropertyData, resetPropertyData } = PropertyStore()
   const { featuresData, setFeaturesData, resetFeatures } = featuresStore()
+  const [buildTypes, setBuildTypes] = useState([])
   const target = {
     propertyId: "",
     label: "",
@@ -31,6 +33,16 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
     setAdditionalData(field, value)
   }
 
+  useEffect(() => {
+    apiStore.getState().api.get("/build-type/get-all").then(req => {
+      const { data: buildTypes } = req.data
+      console.log(buildTypes)
+      setBuildTypes(buildTypes)
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [])
+
   return (
     <div className="container mx-auto grid grid-cols-3 gap-x-5 gap-y-6 p-6 shadow-2xl">
       <div className="flex">
@@ -49,13 +61,29 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
         onChange={(e) => handleChange("material", e)}
       ></TextField>
       <div>
-        <Select fullWidth>
-          {
-            buildTypes.map(type => {
-              return <MenuItem id={type.id} key={type.id} >{type.name}</MenuItem>
-            })
-          }
+        <Select
+          fullWidth
+          value={buildType || ""} // faqat id saqlash yaxshiroq
+          onChange={(e) => {
+            const { value } = e.target;
+            const type = buildTypes.find(t => t.id === value);
+            if (type) {
+              setBuildType(type.id); // buildType = id
+              setAdditionalData("buildTypeId", type.id);
+            }
+          }}
+          displayEmpty
+        >
+          <MenuItem value="">
+            <em>Build Type</em>
+          </MenuItem>
+          {buildTypes.map(type => (
+            <MenuItem key={type.id} value={type.id}>
+              {type.name}
+            </MenuItem>
+          ))}
         </Select>
+
       </div>
       <TextField
         type='number'
@@ -68,7 +96,7 @@ export function Additionals({ buildTypes = [{ id: "cowincdoewmixedw", name: "Sox
         type='number'
         label="Rooms"
         required
-        value={additionalData.beds}
+        value={additionalData.rooms}
         onChange={(e) => handleChange("rooms", e)}
       ></TextField>
       <TextField

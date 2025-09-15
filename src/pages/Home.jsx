@@ -6,7 +6,7 @@ import HomePreview from "../utils/home-utils/Home-preview"
 import Slide from '@mui/material/Slide';
 import Category from "../utils/home-utils/Home-slide"
 
-function Home() {
+function Home({propertyViewId,setView}) {
 
     const { isDark } = isDarkStore()
 
@@ -17,12 +17,12 @@ function Home() {
 
             </section>
 
-            <HomeRecomendation isDark={isDark} />
+            <HomeRecomendation isDark={isDark} propertyViewId={propertyViewId} setView={setView}/>
 
             <HomePreview isDark={isDark} />
 
-            <section className="w-full h-[500px] border-2 mb-1.5 pt-1.5">
-                <div className="container flex flex-col items-center space-y-4 mx-auto">
+            <section className="w-full h-[500px] mb-1.5 pt-1.5 overflow-hidden max-md:h-max">
+                <div className="container flex  flex-col items-center space-y-4 mx-auto max-md:w-full">
                     <h1 className="text-4xl">Category</h1>
                     <Category />
                 </div>

@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import PropertyRender from "./Home-recomendation-carusel"
 
 
-function HomeRecomendation({ isDark = false }) {
+function HomeRecomendation({ isDark = false ,propertyViewId,setView }) {
 
     return (
         <section className="relative overflow-hidden h-[800px]">
@@ -13,8 +13,8 @@ function HomeRecomendation({ isDark = false }) {
                     <h1 className="text-3xl">Recomendation</h1>
                 </div>
             </div>
-            <div className="container mx-auto relative z-50 h-[600px] px-10">
-                <PropertyRender isDark={isDark} />
+            <div className="container mx-auto relative z-50 h-[600px] px-10 max-md:w-full max-md:px-6">
+                <PropertyRender propertyViewId={propertyViewId} setView={setView} isDark={isDark} />
             </div>
         </section>
     )

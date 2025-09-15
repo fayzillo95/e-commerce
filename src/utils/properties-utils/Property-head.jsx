@@ -8,14 +8,13 @@ import { apiStore } from '../../service/api'
 import { useLocation } from 'react-router-dom'
 
 function PropertyHead() {
-    const [category, setCategory] = useState([])
+    const [category, setCategory] = useState("")
     const { categories, setCategories } = categoryStore()
 
     const { propertyData, setPropertyData, resetPropertyData } = PropertyStore()
 
     useEffect(() => {
         const ct = categories.find(el => el.name === category)
-        console.log(ct)
         if (ct && ct.id) {
             setPropertyData("categoryId",ct.id)
         }
@@ -31,8 +30,6 @@ function PropertyHead() {
         })
     }, [url.pathname])
 
-    // useEffect(() => console.log(categories),[categories])
-    useEffect(() => console.log(propertyData),[propertyData])
     return (
         <div className='container mx-auto flex flex-col gap-y-5 py-5 px-1.5 rounded-[5px] shadow-2xl mt-6'>
             <div className='grid grid-cols-2 w-full gap-x-10'>

@@ -60,13 +60,11 @@ const MapComponent = () => {
         });
         const data = await response.json();
         if (data && data.length > 0) {
-          console.log(data)
           const adressName = data.at(-1).display_name
           setPropertyData("address",adressName)
           const lat = parseFloat(data[0].lat);
           const lng = parseFloat(data[0].lon);
           setPropertyData("locationUrl", `https://www.google.com/maps?q=${lat},${lng}`)
-          console.log({ address, lat, lng })
           setCoords({ lat, lng });
           if (markerRef.current) {
             mapInstance.removeLayer(markerRef.current);

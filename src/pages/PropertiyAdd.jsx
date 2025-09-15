@@ -29,7 +29,6 @@ function PropertiyAdd() {
         let { title, address, description, price, discount, locationUrl, status, isSale, categoryId, ownerId } = propertyData
         let { label, material, beds, baths, garages, garageSize, year_build, homeArea, lotDimensions, lotArea, rooms, buildTypeId } = additionalData
 
-        console.log(additionalData)    
         try {
             const propertyCreateRequest = await api.post("/properties/create", {
                 title: title,
@@ -43,8 +42,6 @@ function PropertiyAdd() {
                 isSale: isSale,
                 categoryId: parseInt(categoryId)
             })
-
-            console.log(propertyCreateRequest.data)
 
             const propertyId = propertyCreateRequest.data.id
             const buildTypeId = "53802dde-969e-439e-ae6c-c0605288abf6"
@@ -67,7 +64,6 @@ function PropertiyAdd() {
             console.log(additionalsRequest.data)
             const propertyMediaFormData = new FormData()
 
-            // features (agar array bo‘lsa)
             if (Array.isArray(propertyMediaData.features)) {
                 propertyMediaData.features.forEach(file => {
                     propertyMediaFormData.append("features", file)
@@ -76,7 +72,6 @@ function PropertiyAdd() {
                 propertyMediaFormData.append("features", propertyMediaData.features)
             }
 
-            // gallery
             if (Array.isArray(propertyMediaData.gallery)) {
                 propertyMediaData.gallery.forEach(file => {
                     propertyMediaFormData.append("gallery", file)
@@ -85,7 +80,6 @@ function PropertiyAdd() {
                 propertyMediaFormData.append("gallery", propertyMediaData.gallery)
             }
 
-            // attachments
             if (Array.isArray(propertyMediaData.attachments)) {
                 propertyMediaData.attachments.forEach(file => {
                     propertyMediaFormData.append("attachments", file)
@@ -94,17 +88,13 @@ function PropertiyAdd() {
                 propertyMediaFormData.append("attachments", propertyMediaData.attachments)
             }
 
-            // propertyId oddiy string bo‘ladi
             propertyMediaFormData.append("propertyId", propertyId)
 
 
-            console.log(propertyMediaFormData)
 
             const propertyMediaRequest = await api.post("/property-media/create", propertyMediaFormData, {
                 headers: { "Content-Type": "multipart/form-data" }
             })
-
-            console.log(propertyMediaRequest)
 
         } catch (error) {
             console.log(error)

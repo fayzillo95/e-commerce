@@ -39,7 +39,7 @@ function Header() {
                         }
                     </Button>
                     {
-                        isAuth ? <MenuProfile/>: <NavLink to="/sign">Sign</NavLink>
+                        isAuth ? <MenuProfile navLink={<Link to="/dashboard">Dashboard</Link>}/>: <NavLink to="/sign">Sign</NavLink>
                     }
                 </div>
             </div>

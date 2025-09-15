@@ -7,3 +7,7 @@
     background-size: cover;
     object-fit: fill;
 }
+
+.active{
+    @apply underline underline-offset-2
+}

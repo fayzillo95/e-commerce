@@ -11,44 +11,43 @@ const slides = [
 ];
 
 function Category() {
+  const { categories, setCategories } = categoryStore()
+  const { api } = apiStore()
+  const url = useLocation()
 
-    const {categories, setCategories} = categoryStore()
-    const { api } = apiStore()
-    const url = useLocation()
+  useEffect(() => {
+    api.get("/categories/get-all").then(res => {
+      const result = res.data
+      setCategories(result.categories)
+    })
+  }, [url.pathname])
 
-    useEffect(() => {
-        api.get("/categories/get-all").then(res => {
-            const result = res.data
-            setCategories(result.categories)
-        })
-    }, [url.pathname])
-
-    return (
-        <div className="flex gap-x-6 w-full justify-center">
-            {categories.map((category, index) => {
-                const { id, name, img } = category
-                return (
-                    <div className="w-auto h-max relative flex justify-center items-center" key={index}>
-                        <div
-                            className="relative z-[1] flex justify-center items-center bg-blur-[1px]"
-                            style={{
-                                backgroundImage: `url(${img})`,
-                                width: "250px",
-                                height: "300px",
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                            }}
-                        >
-                            <div className="w-full h-full bg-[rgba(1,1,1,0.63)] flex flex-col items-center justify-center spaxe-y-4">
-                                <img src="" alt="" />
-                                <h1 className="text-white">{name}</h1>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })}
+  return (
+    <div className="h-max grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full">
+      {categories.map(({ id, name, img }) => (
+        <div
+          key={id}
+          className="relative flex justify-center items-center rounded-xl shadow-md overflow-hidden"
+          style={{
+            backgroundImage: `url(${img})`,
+            height: "250px",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="w-full h-full bg-black/60 flex flex-col items-center justify-center p-4">
+            <img
+              src={img}
+              alt={name}
+              className="w-16 h-16 object-cover rounded-full mb-2"
+            />
+            <h1 className="text-white text-lg font-semibold">{name}</h1>
+          </div>
         </div>
-    );
+      ))}
+    </div>
+  )
 }
+
 
 export default Category;

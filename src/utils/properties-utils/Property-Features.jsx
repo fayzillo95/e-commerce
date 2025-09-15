@@ -29,7 +29,6 @@ const Amenities = () => {
     const handleChange = (event) => {
 
         const value = event.target.name.toLowerCase().replaceAll(" ", "_");
-        console.log(event.target.name.toLowerCase().replaceAll(" ", "_"))
         setCheckedAmenities((prev) =>
             prev.includes(value)
                 ? prev.filter((item) => item !== value)
@@ -45,7 +44,7 @@ const Amenities = () => {
                 </Typography>
                 <div className='w-full grid grid-cols-4 border-2 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 pl-4'>
                     {amenitiesList.map((amenity) => (
-                        <Grid key={amenity} item xs={6} sm={3} fontSize={50}>
+                        <Grid key={amenity} container fontSize={50}>
                             <FormControlLabel
                                 control={
                                     <Checkbox

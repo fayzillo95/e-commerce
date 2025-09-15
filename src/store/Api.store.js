@@ -27,7 +27,6 @@ export const ApiStore = create((set) => {
                 originalRequest._retry = true; // faqat bir marta urinish
             
                 if (originalRequest.url !== "auth/reset-token") {
-                    const navigate = useLocation()
                     try {
                         const refreshToken = getAccessToken();
                         const data = await api.get("auth/reset-token", {
@@ -37,7 +36,7 @@ export const ApiStore = create((set) => {
                         return api(originalRequest); // original requestni qayta yuborish
                     } catch (e) {
                         console.log("Token yangilashda xato:", e);
-                        navigate("/sign")
+                        window.location =  "/sign"
                     }
                 }
             }
